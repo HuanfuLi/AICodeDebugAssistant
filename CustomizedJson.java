@@ -1,4 +1,4 @@
-package main;
+package com.ai_assistant.api.model;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -38,11 +38,13 @@ public class CustomizedJson {
     }
 
     public String CreateCustomJson(){
+        //Use Google Gson to create custom json payload
         Gson gson = new Gson();
 
         JsonObject input= new JsonObject();
         input.addProperty("model", model);
 
+        //Use JsonArray to add system content and user content
         JsonArray messagesArray = new JsonArray();
         JsonObject systemMessage = new JsonObject();
         systemMessage.addProperty("role", "system");
@@ -69,3 +71,4 @@ public class CustomizedJson {
         System.out.println(input);
     }*/
 }
+

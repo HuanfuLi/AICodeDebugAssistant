@@ -1,5 +1,5 @@
-package main;
+package com.ai_assistant.api.model;
 
 public interface ConnectionHandler {
-    String runConnection(int port, String IPaddress, String passedInfo);
+    String runConnection(int port, String address, Prompt passedInfo);
 }
