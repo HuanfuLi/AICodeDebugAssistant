@@ -34,7 +34,7 @@ public class InsertUser extends DatabaseConnection implements DatabaseHandler{
 
 
     @Override
-    public String connectDatabase(Prompt prompt) {
+    public String execute(Prompt prompt) {
         try {
             //Establish connection to database
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);

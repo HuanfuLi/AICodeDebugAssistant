@@ -10,7 +10,7 @@ public class CreateTable extends DatabaseConnection implements DatabaseHandler{
     Statement statement = null;
     
     @Override
-    public String connectDatabase(Prompt prompt) {
+    public String execute(Prompt prompt) {
         try {
             //Establish connection to database
             conn = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
@@ -49,11 +49,12 @@ public class CreateTable extends DatabaseConnection implements DatabaseHandler{
 
 
     // Test main
-    // public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-    //     // Class.forName("com.mysql.jdbc.Driver").newInstance();
-    //     Prompt test = new Prompt(1, 1, null, null);
-    //     test.setTimeStamp("25-04-21 03:26:15");
-    //     CreateTable table = new CreateTable();
-    //     table.connectDatabase(test);
-    // }
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        // Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Prompt test = new Prompt(1, 1, null, null);
+        test.setTimeStamp("25-04-21 03:26:15");
+        DatabaseContext context = new DatabaseContext();
+        context.setHandler(new CreateTable());
+        context.executeStrategy(test);
+    }
 }

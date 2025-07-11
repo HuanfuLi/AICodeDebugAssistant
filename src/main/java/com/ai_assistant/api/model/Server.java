@@ -66,10 +66,10 @@ public class Server{
                     String response = toAI.runConnection(prompt.selection, prompt.content, address);
                     prompt.setResponse(response);
 
-                    //Implement JDBC below, use prompt object UID and timeStamp to store question and response to database
-                    InsertRecord record = new InsertRecord();
-                    record.connectDatabase(prompt);
-
+                    //Implement JDBC below, using Strategy Design Pattern:
+                    DatabaseContext context = new DatabaseContext();
+                    context.setHandler(new InsertRecord());
+                    context.executeStrategy(prompt);
 
                     //Return response String to client, then client displays String directly. Client does not need to access prompt objects.
                     output.println(response);
@@ -112,7 +112,7 @@ public class Server{
                 while(in.hasNextLine()){
                     tempTimeStamp = in.nextLine();
                 }
-                //Split the output from time server and trim it until it only contain time information
+                //Split the output from time server and trim it until it only contains time information
                 String[] parts = tempTimeStamp.split(" ");
                 if (parts.length >= 3){
                     timeStamp = parts[1] + " " + parts[2];
@@ -135,8 +135,9 @@ public class Server{
 
     public static void main(String[] args) {
         //Check and create the HISTORY table before server start
-        CreateTable table = new CreateTable();
-        table.connectDatabase(new Prompt(0, 0, null, null));
+        DatabaseContext context = new DatabaseContext();
+        context.setHandler(new CreateTable());
+        context.executeStrategy(null);
 
         //Set the AI service URL here
         Server s1 = new Server(8189, "http://localhost:1234/v1/chat/completions");

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.ai_assistant.api.model.DatabaseContext;
 import com.ai_assistant.api.model.InsertUser;
 
 public class RegisterPage extends JPanel {
@@ -85,8 +86,11 @@ public class RegisterPage extends JPanel {
                     //Return to login page after authenticated
                     String email = emailField.getText();
                     String password = new String(passwordField.getPassword()).trim();
-                    InsertUser newUser = new InsertUser(email, password);
-                    newUser.connectDatabase(null);
+
+                    DatabaseContext context = new DatabaseContext();
+                    context.setHandler(new InsertUser(email, password));
+                    context.executeStrategy(null);
+
                     mainFrame.showCard("login");
                 } else {
                     JOptionPane.showMessageDialog(RegisterPage.this, bundle.getString("popErrorMsg"), bundle.getString("popErrorTitle"), JOptionPane.ERROR_MESSAGE);

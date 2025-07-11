@@ -6,5 +6,5 @@ import java.sql.Statement;
 public interface DatabaseHandler {
         Connection conn = null;
         Statement statement = null;
-    String connectDatabase(Prompt prompt);
+    String execute(Prompt prompt);
 }

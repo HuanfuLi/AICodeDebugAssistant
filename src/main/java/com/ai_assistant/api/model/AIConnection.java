@@ -54,7 +54,7 @@ public class AIConnection {
             conn.setDoOutput(true);
 
             // Create JSON payload. Format: model, system content, user content.
-            CustomizedJson cJson = new CustomizedJson("deepseek-r1-distill-qwen-7b", getSelection(selection), AIInput);
+            CustomizedJson cJson = new CustomizedJson("deepseek-r1-distill-qwen-1.5b", getSelection(selection), AIInput);
             String jsonInputString = cJson.CreateCustomJson();
 
             // Send the JSON input
