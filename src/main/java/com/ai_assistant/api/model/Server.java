@@ -9,14 +9,15 @@ import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-public class Server{
+@Component
+public class Server implements CommandLineRunner{
     private int port;
     private String address;
 
-    public Server(int port, String address){
-        this.port = port;
-        this.address = address;
+    public Server(){
     }
 
     public void setServerPort(int port){
@@ -133,14 +134,17 @@ public class Server{
         return mysqlDateTimeString;
     }
 
-    public static void main(String[] args) {
+    @Override
+    public void run(String[] args) throws Exception {
         //Check and create the HISTORY table before server start
         DatabaseContext context = new DatabaseContext();
         context.setHandler(new CreateTable());
         context.executeStrategy(null);
 
         //Set the AI service URL here
-        Server s1 = new Server(8189, "http://localhost:1234/v1/chat/completions");
-        s1.runConnection(8189, "http://localhost:1234/v1/chat/completions");
+        this.port = 8189;
+        this.address = "http://localhost:1234/v1/chat/completions";
+
+        runConnection(this.port, this.address);
     }
 }
